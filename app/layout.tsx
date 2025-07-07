@@ -1,28 +1,35 @@
 import { type PropsWithChildren } from "react";
-import Navigation from "@/app/_components/Navigation";
-import Logo from "@/app/_components/Logo";
 import "@/app/styles/globals.css"
+import {Josefin_Sans} from "next/font/google"
+import Header from "./_components/Header";
+
+const josifen = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap"
+})
 
 type PageContent = PropsWithChildren
 
 export const metadata = {
-  title: "The Wild Oasis"
+  title: {
+    template: "%s / The Wild Oasis",
+    default: "Welcome / The Wild Oasis"
+  },
+  description: "Luxurious cabin hotel, located in the heart of Naran, surrounded by beautiful mountains and dark forests"
 }
 
 export default function RootLayout({children
 }: PageContent) {
   return (
     <html lang="en">
-      <body className="bg-primary-900 text-primary-100 min-h-screen">
-        <header>
-          <Logo />
-          <Navigation />
-        </header>
-        <main>
+      <body className={`${josifen.className} bg-primary-900 text-primary-100 min-h-screen flex flex-col antialiased relative`}>
+        <Header />
+      <div className="bg-primary-900 max-w-6xl mx-auto px-6 py-10 flex-1"  >
+        <main >
           {children}
         </main>
+      </div>
 
-        <footer>Copyright by The Wild Oasis</footer>
       </body>
     </html>
   )
