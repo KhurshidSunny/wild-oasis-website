@@ -9,7 +9,6 @@ type CabinCardType = {
 
 function CabinCard({ cabin }: CabinCardType) {
   const { _id, name, maxCapacity, regularPrice, discount, image } = cabin;
-  console.log(name);
 
   return (
     <div className="flex border-primary-800 border">

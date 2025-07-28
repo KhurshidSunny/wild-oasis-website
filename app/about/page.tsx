@@ -5,6 +5,7 @@ import { getCabins } from "../_lib/data-service";
 import { CabinType } from "../types/cabin";
 
 export const revalidate = 86400; // once per day
+
 export const metadata = {
   title: "About",
 };
