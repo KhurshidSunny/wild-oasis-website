@@ -24,8 +24,8 @@ export default function RootLayout({children
     <html lang="en">
       <body className={`${josifen.className} bg-primary-900 text-primary-100 min-h-screen flex flex-col antialiased relative`}>
         <Header />
-      <div className="bg-primary-900 max-w-6xl mx-auto px-6 py-10 flex-1"  >
-        <main >
+      <div className="flex-1 py-10 grid">
+        <main className="bg-primary-900 max-w-6xl mx-auto w-full"  >
           {children}
         </main>
       </div>
