@@ -2,11 +2,11 @@ import { PropsWithChildren } from "react";
 import { getBookedDatesByCabinId, getSettings } from "../_lib/data-service";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
+import { auth } from "../_lib/auth";
+import LoginMessage from "./LoginMessage";
 
 async function Reservation({ cabin }: PropsWithChildren) {
-  //   const settings = await getSettings();
-  //   const bookDates = await getBookedDatesByCabinId(cabin._id);
-
+  const session = await auth();
   const [settings, bookedDates] = await Promise.all([
     getSettings(),
     getBookedDatesByCabinId(cabin._id),
@@ -18,7 +18,11 @@ async function Reservation({ cabin }: PropsWithChildren) {
         cabin={cabin}
         bookedDates={bookedDates}
       />
-      <ReservationForm cabin={cabin} />
+      {session?.user ? (
+        <ReservationForm cabin={cabin} user={session?.user} />
+      ) : (
+        <LoginMessage />
+      )}
     </div>
   );
 }

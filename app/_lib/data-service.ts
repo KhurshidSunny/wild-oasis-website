@@ -39,49 +39,32 @@ export async function getCabins() {
 // }
 
 // Guests are uniquely identified by their email address
-// export async function getGuest(email) {
-//   const { data, error } = await supabase
-//     .from("guests")
-//     .select("*")
-//     .eq("email", email)
-//     .single();
+export async function getGuest(email) {
+  const response = await api.get(`/guests/guest_email/${email}`);
+  return response.data.data[0];
+}
 
-//   // No error here! We handle the possibility of no guest in the sign in callback
-//   return data;
-// }
+export async function createGuest(newGuest) {
+  console.log(newGuest, "from guest create");
+  const response = await api.post("/guests", newGuest);
+  return response.data;
+}
 
-// export async function getBooking(id) {
-//   const { data, error, count } = await supabase
-//     .from("bookings")
-//     .select("*")
-//     .eq("id", id)
-//     .single();
+export async function updateGuest(id, guestData) {
+  const response = await api.patch(`/guests/${id}`, guestData);
+  return response.data;
+}
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Booking could not get loaded");
-//   }
+export async function getBooking(id) {
+  const response = await api.get(`/bookings/${id}`);
+  return response.data.data;
+}
 
-//   return data;
-// }
-
-// export async function getBookings(guestId) {
-//   const { data, error, count } = await supabase
-//     .from("bookings")
-//     // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
-//     .select(
-//       "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
-//     )
-//     .eq("guestId", guestId)
-//     .order("startDate");
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Bookings could not get loaded");
-//   }
-
-//   return data;
-// }
+export async function getBookings(guestId) {
+  console.log(guestId);
+  const response = await api.get(`/bookings/guest/${guestId}`);
+  return response.data.data;
+}
 
 export async function getBookedDatesByCabinId(cabinId) {
   let today = new Date();
@@ -91,18 +74,7 @@ export async function getBookedDatesByCabinId(cabinId) {
   // Getting all bookings
   const response = await api.get(`/bookings`);
   const data = response.data.data;
-  // const { data, error } = await supabase
-  //   .from("bookings")
-  //   .select("*")
-  //   .eq("cabinId", cabinId)
-  //   .or(`startDate.gte.${today},status.eq.checked-in`);
 
-  // if (error) {
-  //   console.error(error);
-  //   throw new Error("Bookings could not get loaded");
-  // }
-
-  // Converting to actual dates to be displayed in the date picker
   const bookedDates = data
     ?.map((booking) => {
       return eachDayOfInterval({
@@ -133,18 +105,6 @@ export async function getCountries() {
 }
 
 /////////////
-// CREATE
-
-// export async function createGuest(newGuest) {
-//   const { data, error } = await supabase.from("guests").insert([newGuest]);
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Guest could not be created");
-//   }
-
-//   return data;
-// }
 
 // export async function createBooking(newBooking) {
 //   const { data, error } = await supabase
@@ -181,30 +141,13 @@ export async function getCountries() {
 //   return data;
 // }
 
-// export async function updateBooking(id, updatedFields) {
-//   const { data, error } = await supabase
-//     .from("bookings")
-//     .update(updatedFields)
-//     .eq("id", id)
-//     .select()
-//     .single();
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Booking could not be updated");
-//   }
-//   return data;
-// }
+export async function updateBooking(id, updatedFields) {
+  await api.patch(`/bookings/${id}`, updatedFields);
+}
 
 /////////////
 // DELETE
 
-// export async function deleteBooking(id) {
-//   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Booking could not be deleted");
-//   }
-//   return data;
-// }
+export async function deleteBooking(id) {
+  await api.delete(`/bookings/${id}`);
+}
