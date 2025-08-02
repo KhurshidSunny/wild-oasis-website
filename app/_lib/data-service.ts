@@ -89,7 +89,7 @@ export async function getBookedDatesByCabinId(cabinId) {
 
 export async function getSettings() {
   const response = await api.get("/settings");
-  return response.data.data.settings;
+  return response.data.data.settings[0];
 }
 
 export async function getCountries() {
@@ -106,21 +106,10 @@ export async function getCountries() {
 
 /////////////
 
-// export async function createBooking(newBooking) {
-//   const { data, error } = await supabase
-//     .from("bookings")
-//     .insert([newBooking])
-//     // So that the newly created object gets returned!
-//     .select()
-//     .single();
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Booking could not be created");
-//   }
-
-//   return data;
-// }
+export async function createBookingApi(newBooking) {
+  const response = await api.post("/bookings", newBooking);
+  return response.data.data;
+}
 
 /////////////
 // UPDATE
@@ -148,6 +137,6 @@ export async function updateBooking(id, updatedFields) {
 /////////////
 // DELETE
 
-export async function deleteBooking(id) {
+export async function deleteBookingById(id) {
   await api.delete(`/bookings/${id}`);
 }

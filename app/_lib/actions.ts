@@ -1,7 +1,12 @@
 "use server";
 
 import { auth, signIn, signOut } from "@/app/_lib/auth";
-import { deleteBooking, updateBooking, updateGuest } from "./data-service";
+import {
+  createBookingApi,
+  deleteBookingById,
+  updateBooking,
+  updateGuest,
+} from "./data-service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -30,12 +35,32 @@ export async function signOutAction() {
   await signOut({ redirectTo: "/" });
 }
 
-export async function deleteReservation(bookingId) {
+export async function createBooking(bookingData, formData) {
+  const session = await auth();
+
+  if (!session) throw new Error("You are not logged in. Please log in first!");
+  const newBooking = {
+    ...bookingData,
+    guest: session?.user.guestId,
+    numGuests: +formData.get("numGuests"),
+    observations: formData.get("observations").slice(0, 1000),
+    extrasPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    isPaid: false,
+    isBreakfast: false,
+    status: "unconfirmed",
+  };
+  createBookingApi(newBooking);
+  revalidatePath(`/cabins/${bookingData.cabin}`);
+  redirect("/cabins/thankyou");
+}
+
+export async function deleteBooking(bookingId) {
   const session = await auth();
 
   if (!session) throw new Error("You are not logged in. Please log in first!");
 
-  deleteBooking(bookingId);
+  deleteBookingById(bookingId);
 
   revalidatePath("/account/reservations");
 }
