@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { api } from "../axios";
-import { eachDayOfInterval } from "date-fns";
+import { BookingType } from "../types/booking";
+import { GuestType } from "../types/guest";
+import { CreateBookingDto } from "./actions";
 
 /////////////
 // GET
@@ -24,67 +26,35 @@ export async function getCabins() {
   return response.data.data;
 }
 
-// export async function getCabinPrice(id) {
-//   const { data, error } = await supabase
-//     .from("cabins")
-//     .select("regularPrice, discount")
-//     .eq("id", id)
-//     .single();
-
-//   if (error) {
-//     console.error(error);
-//   }
-
-//   return data;
-// }
-
 // Guests are uniquely identified by their email address
-export async function getGuest(email) {
+export async function getGuest(email: string) {
   const response = await api.get(`/guests/guest_email/${email}`);
   return response.data.data[0];
 }
 
-export async function createGuest(newGuest) {
-  console.log(newGuest, "from guest create");
+export async function createGuest(newGuest: GuestType) {
   const response = await api.post("/guests", newGuest);
   return response.data;
 }
 
-export async function updateGuest(id, guestData) {
+export async function updateGuest(id: string, guestData: GuestType) {
   const response = await api.patch(`/guests/${id}`, guestData);
   return response.data;
 }
 
-export async function getBooking(id) {
-  const response = await api.get(`/bookings/${id}`);
+export async function getBooking(bookingId: string) {
+  const response = await api.get(`/bookings/${bookingId}`);
   return response.data.data;
 }
 
-export async function getBookings(guestId) {
-  console.log(guestId);
+export async function getBookings(guestId: string): Promise<BookingType[]> {
   const response = await api.get(`/bookings/guest/${guestId}`);
   return response.data.data;
 }
 
-export async function getBookedDatesByCabinId(cabinId) {
-  let today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
-  today = today.toISOString();
-
-  // Getting all bookings
-  const response = await api.get(`/bookings`);
-  const data = response.data.data;
-
-  const bookedDates = data
-    ?.map((booking) => {
-      return eachDayOfInterval({
-        start: new Date(booking.startDate),
-        end: new Date(booking.endDate),
-      });
-    })
-    .flat();
-
-  return bookedDates;
+export async function getBookedDatesByCabinId(cabinId: string) {
+  const response = await api.get(`/bookings/cabin/${cabinId}/booked-dates`);
+  return response.data.data;
 }
 
 export async function getSettings() {
@@ -106,7 +76,7 @@ export async function getCountries() {
 
 /////////////
 
-export async function createBookingApi(newBooking) {
+export async function createBookingApi(newBooking: CreateBookingDto) {
   const response = await api.post("/bookings", newBooking);
   return response.data.data;
 }
@@ -114,29 +84,20 @@ export async function createBookingApi(newBooking) {
 /////////////
 // UPDATE
 
-// // The updatedFields is an object which should ONLY contain the updated data
-// export async function updateGuest(id, updatedFields) {
-//   const { data, error } = await supabase
-//     .from("guests")
-//     .update(updatedFields)
-//     .eq("id", id)
-//     .select()
-//     .single();
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Guest could not be updated");
-//   }
-//   return data;
-// }
-
-export async function updateBooking(id, updatedFields) {
+type UpdateBookingParams = {
+  numGuests: number;
+  observations: string;
+};
+export async function updateBooking(
+  id: string,
+  updatedFields: UpdateBookingParams
+) {
   await api.patch(`/bookings/${id}`, updatedFields);
 }
 
 /////////////
 // DELETE
 
-export async function deleteBookingById(id) {
-  await api.delete(`/bookings/${id}`);
+export async function deleteBookingById(bookingId: string) {
+  await api.delete(`/bookings/${bookingId}`);
 }

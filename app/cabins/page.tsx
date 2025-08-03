@@ -8,9 +8,6 @@ type SearchParamsType = {
   searchParams: { capacity: string };
 };
 
-// fetch fresh data after 1 hour (ISR) [But here it doesn't work since the Page is using searchParams which is making it the dynmaic by next.js]
-// export const revalidate = 3600;
-
 export const metadata = {
   title: "Cabins",
 };

@@ -9,6 +9,11 @@ const nextConfig = {
         pathname: "/cabins/**",
         search: "",
       },
+      // allowing guest profile image from google account
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
   },
 };

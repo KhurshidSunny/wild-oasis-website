@@ -2,7 +2,11 @@ import { updateReservation } from "@/app/_lib/actions";
 import { getBooking } from "@/app/_lib/data-service";
 import SubmitButton from "@/app/_components/SubmitButton";
 
-export default async function Page({ params }) {
+type PageProps = {
+  params: { bookingId: string };
+};
+
+export default async function Page({ params }: PageProps) {
   const {
     numGuests,
     observations,

@@ -1,13 +1,16 @@
 "use client";
 
-import { PropsWithChildren } from "react";
 import { updateProfile } from "../_lib/actions";
 import SubmitButton from "@/app/_components/SubmitButton";
 import Image from "next/image";
+import { GuestType } from "../types/guest";
 
-function UpdateProfileForm({ children, guest }: PropsWithChildren) {
-  // const [count, setCount] = useState();
+type UpdateProfileFormProps = {
+  children: React.ReactNode;
+  guest: GuestType;
+};
 
+function UpdateProfileForm({ children, guest }: UpdateProfileFormProps) {
   const { fullName, email, nationalID, countryFlag } = guest;
 
   return (
@@ -39,12 +42,14 @@ function UpdateProfileForm({ children, guest }: PropsWithChildren) {
         <div className="flex items-center justify-between">
           <label htmlFor="nationality">Where are you from?</label>
           <div className="relative  h-5 w-10">
-            <Image
-              src={countryFlag}
-              alt="Country flag"
-              fill
-              className="object-cover h-5 rounded-sm"
-            />
+            {countryFlag && (
+              <Image
+                src={countryFlag}
+                alt="Country flag"
+                fill
+                className="object-cover h-5 rounded-sm"
+              />
+            )}
           </div>
         </div>
 

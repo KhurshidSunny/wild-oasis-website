@@ -1,8 +1,13 @@
 "use client";
 
+import React from "react";
 import { useFormStatus } from "react-dom";
+type ButtonProps = {
+  children: React.ReactNode;
+  pendingLabel: string;
+};
 
-export default function Button({ children, pendingLabel }) {
+export default function Button({ children, pendingLabel }: ButtonProps) {
   const { pending } = useFormStatus();
   return (
     <button

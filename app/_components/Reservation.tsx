@@ -1,11 +1,15 @@
-import { PropsWithChildren } from "react";
 import { getBookedDatesByCabinId, getSettings } from "../_lib/data-service";
 import DateSelector from "./DateSelector";
 import ReservationForm from "./ReservationForm";
 import { auth } from "../_lib/auth";
 import LoginMessage from "./LoginMessage";
+import { CabinType } from "../types/cabin";
 
-async function Reservation({ cabin }: PropsWithChildren) {
+type cabinProps = {
+  cabin: CabinType;
+};
+
+async function Reservation({ cabin }: cabinProps) {
   const session = await auth();
   const [settings, bookedDates] = await Promise.all([
     getSettings(),

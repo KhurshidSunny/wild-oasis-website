@@ -2,14 +2,18 @@ import { CabinType } from "./cabin";
 import { GuestType } from "./guest";
 
 export type BookingType = {
-  _id: string;
-  guest: GuestType;
-  startDate: string;
-  endDate: Date;
+  _id?: string;
+  createdAt?: string;
+  guest: GuestType | string;
+  startDate?: Date;
+  endDate?: Date;
   numNights: number;
-  totalPrice: number;
   numGuests: number;
-  status: string;
-  created_at: Date;
+  observations: string;
+  extrasPrice: number;
+  totalPrice: number;
+  isPaid: boolean;
+  isBreakfast: boolean;
+  status: "unconfirmed" | "checked-out" | "checked-in";
   cabin: CabinType;
 };

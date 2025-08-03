@@ -9,18 +9,62 @@ import {
 } from "./data-service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { GuestType } from "../types/guest";
+import { CabinType } from "../types/cabin";
 
-export async function updateProfile(formData) {
+type UpdateGuestData = {
+  fullName: string;
+  nationality: string;
+  countryFlag: string;
+  nationalID: string;
+};
+
+type BookingDataType = {
+  startDate?: Date;
+  endDate?: Date;
+  numNights: number;
+  cabinPrice: number;
+  cabin: string;
+};
+
+export type CreateBookingDto = {
+  guest: GuestType | string;
+  startDate?: string;
+  endDate?: string;
+  numNights: number;
+  numGuests: number;
+  observations: string;
+  extrasPrice: number;
+  totalPrice: number;
+  isPaid: boolean;
+  isBreakfast: boolean;
+  status: "unconfirmed" | "checked-out" | "checked-in";
+  cabin: CabinType | string;
+};
+
+type UpdateReservationDataType = {
+  numGuests: number;
+  observations: string;
+};
+
+export async function updateProfile(formData: FormData) {
   const session = await auth();
   const guestId = session?.user?.guestId;
 
   if (!session) throw new Error("You are not logged in. Please log in first!");
 
-  const nationalID = formData.get("nationalID");
-  const fullName = formData.get("fullName");
-  const [nationality, countryFlag] = formData.get("nationality")?.split("%");
+  const nationalID = formData.get("nationalID") as string;
+  const fullName = formData.get("fullName") as string;
+  const [nationality, countryFlag] = (
+    formData.get("nationality") as string
+  )?.split("%");
 
-  const updateData = { fullName, nationality, countryFlag, nationalID };
+  const updateData: UpdateGuestData = {
+    fullName,
+    nationality,
+    countryFlag,
+    nationalID,
+  };
 
   await updateGuest(guestId, updateData);
 
@@ -35,15 +79,23 @@ export async function signOutAction() {
   await signOut({ redirectTo: "/" });
 }
 
-export async function createBooking(bookingData, formData) {
+export async function createBooking(
+  bookingData: BookingDataType,
+  formData: FormData
+) {
   const session = await auth();
 
   if (!session) throw new Error("You are not logged in. Please log in first!");
-  const newBooking = {
+  const newBooking: CreateBookingDto = {
     ...bookingData,
+    startDate: bookingData?.startDate?.toISOString(),
+    endDate: bookingData?.endDate?.toISOString(),
     guest: session?.user.guestId,
-    numGuests: +formData.get("numGuests"),
-    observations: formData.get("observations").slice(0, 1000),
+    numGuests: +(formData.get("numGuests") ?? 0),
+    observations: ((formData.get("observations") ?? "") as string).slice(
+      0,
+      1000
+    ),
     extrasPrice: 0,
     totalPrice: bookingData.cabinPrice,
     isPaid: false,
@@ -55,7 +107,7 @@ export async function createBooking(bookingData, formData) {
   redirect("/cabins/thankyou");
 }
 
-export async function deleteBooking(bookingId) {
+export async function deleteBooking(bookingId: string) {
   const session = await auth();
 
   if (!session) throw new Error("You are not logged in. Please log in first!");
@@ -65,16 +117,16 @@ export async function deleteBooking(bookingId) {
   revalidatePath("/account/reservations");
 }
 
-export async function updateReservation(formData) {
+export async function updateReservation(formData: FormData) {
   const session = await auth();
 
   if (!session) throw new Error("You are not logged in. Please log in first!");
 
-  const bookingId = formData.get("bookingId");
-  const numGuests = formData.get("numGuests");
-  const observations = formData.get("observations");
+  const bookingId = formData.get("bookingId") as string;
+  const numGuests = (formData.get("numGuests") ?? 0) as number;
+  const observations = (formData.get("observations") ?? "") as string;
 
-  const updateData = { numGuests, observations };
+  const updateData: UpdateReservationDataType = { numGuests, observations };
 
   updateBooking(bookingId, updateData);
 

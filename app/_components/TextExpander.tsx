@@ -1,8 +1,11 @@
 "use client";
-import { PropsWithChildren, useState } from "react";
-import Logo from "./Logo";
+import { useState } from "react";
 
-function TextExpander({ children }: PropsWithChildren) {
+type TestExpanderProps = {
+  children: string;
+};
+
+function TextExpander({ children }: TestExpanderProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const displayText = isExpanded
     ? children

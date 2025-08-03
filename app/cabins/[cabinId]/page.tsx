@@ -1,10 +1,5 @@
 import { getCabin, getCabins } from "@/app/_lib/data-service";
-import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { CabinType } from "@/app/types/cabin";
-import Image from "next/image";
-import TextExpander from "@/app/_components/TextExpander";
-import DateSelector from "@/app/_components/DateSelector";
-import ReservationForm from "@/app/_components/ReservationForm";
 import Reservation from "@/app/_components/Reservation";
 import { Suspense } from "react";
 import Spinner from "@/app/_components/Spinner";
@@ -27,7 +22,7 @@ export async function generateMetadata({ params }: ParamsType) {
 }
 
 // making this page as static from dynamic
-export async function generateStaticparams() {
+export async function generateStaticParams() {
   const cabins: CabinType[] = await getCabins();
   const ids: IdsType[] = cabins.map((cabin) => {
     return { cabinId: cabin._id };

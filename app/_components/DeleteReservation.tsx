@@ -6,6 +6,7 @@ import SpinnerMini from "./SpinnerMini";
 
 type DeleteReservationProps = {
   bookingId: string;
+  onDelete: (bookingId: string) => Promise<void>;
 };
 
 function DeleteReservation({ bookingId, onDelete }: DeleteReservationProps) {

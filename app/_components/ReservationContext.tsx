@@ -1,15 +1,33 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from "react";
 
-const ReservationContext = createContext();
+export type RangeType = {
+  from: Date | undefined;
+  to?: Date | undefined;
+};
 
-const initialState = {
+type ReservationContextType = {
+  range: RangeType;
+  setRange: React.Dispatch<React.SetStateAction<RangeType>>;
+  resetRange: () => void;
+};
+
+const ReservationContext = createContext<ReservationContextType | undefined>(
+  undefined
+);
+
+const initialState: RangeType = {
   from: undefined,
   to: undefined,
 };
 
-function ReservationProvider({ children }) {
+function ReservationProvider({ children }: PropsWithChildren) {
   const [range, setRange] = useState(initialState);
 
   const resetRange = () => setRange(initialState);

@@ -4,17 +4,40 @@ import { differenceInDays } from "date-fns";
 import { useReservation } from "./ReservationContext";
 import { createBooking } from "../_lib/actions";
 import SubmitButton from "@/app/_components/SubmitButton";
+import Image from "next/image";
+import { CabinType } from "../types/cabin";
 
-function ReservationForm({ cabin, user }) {
+type User = {
+  name: string;
+  email: string;
+  image: string;
+  guestId: string;
+};
+
+type ReservationFormProps = {
+  cabin: CabinType;
+  user: User;
+};
+
+type BookingFormDataType = {
+  startDate?: Date;
+  endDate?: Date;
+  numNights: number;
+  cabinPrice: number;
+  cabin: string;
+};
+
+function ReservationForm({ cabin, user }: ReservationFormProps) {
   const { range, resetRange } = useReservation();
   // CHANGE
   const { maxCapacity, regularPrice, discount, _id } = cabin;
   const startDate = range.from;
   const endDate = range.to;
-  const numNights = differenceInDays(endDate, startDate);
+  const numNights =
+    endDate && startDate ? differenceInDays(endDate, startDate) : 0;
   const cabinPrice = numNights * (regularPrice - discount);
 
-  const bookingData = {
+  const bookingData: BookingFormDataType = {
     startDate,
     endDate,
     numNights,
@@ -29,14 +52,17 @@ function ReservationForm({ cabin, user }) {
       <div className="bg-primary-800 text-primary-300 px-16 py-2 flex justify-between items-center">
         <p>Logged in as</p>
 
-        <div className="flex gap-4 items-center">
-          <img
-            // Important to display google profile images
-            referrerPolicy="no-referrer"
-            className="h-8 rounded-full"
-            src={user.image}
-            alt={user.name}
-          />
+        <div className="flex gap-4 items-center ">
+          <div className="relative w-8 h-8">
+            <Image
+              // Important to display google profile images
+              referrerPolicy="no-referrer"
+              className="rounded-full"
+              fill
+              src={user.image}
+              alt={user.name}
+            />
+          </div>
           <p>{user.name}</p>
         </div>
       </div>
