@@ -60,20 +60,20 @@ Open http://localhost:3000 to see the app running.
 
 ### 🏠 Home Page
 
-![Home Page](public/screenshots/home-page.png)
+![Home Page](./public/screenshots/home-page.png)
 
 ### 📅 Booking Page
 
-![Booking Page](public/screenshots/booking-page.png)
+![Booking Page](./public/screenshots/booking-page.png)
 
 ### 👤 Cabin Reserve Page
 
-![Profile Page](public/screenshots/cabin-reserve-page.png)
+![Profile Page](./public/screenshots/cabin-reserve-page.png)
 
 ### 👤 About Page
 
-![Profile Page](public/screenshots/about-page.png)
+![Profile Page](./public/screenshots/about-page.png)
 
 ### 👤 Cabins Page
 
-![Profile Page](public/screenshots/cabins-page.png)
+![Profile Page](./public/screenshots/cabins-page.png)
