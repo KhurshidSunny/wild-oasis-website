@@ -74,20 +74,20 @@ NEXTAUTH_URL=http://localhost:3000
 
 ### 🏠 Home Page
 
-![Home Page](public/screenshots/home-page.png)
+![Home Page](public/screenshorts/home-page.png)
 
 ### 📅 Booking Page
 
-![Booking Page](public/screenshots/booking-page.png)
+![Booking Page](public/screenshorts/booking-page.png)
 
 ### 👤 Cabin Reserve Page
 
-![Profile Page](public/screenshots/cabin-reserve-page.png)
+![Profile Page](public/screenshorts/cabin-reserve-page.png)
 
 ### 👤 About Page
 
-![Profile Page](public/screenshots/about-page.png)
+![Profile Page](public/screenshorts/about-page.png)
 
 ### 👤 Cabins Page
 
-![Profile Page](public/screenshots/cabins-page.png)
+![Profile Page](public/screenshorts/cabins-page.png)
