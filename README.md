@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌲 The Wild Oasis Website
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-blue?logo=next.js)](https://nextjs.org/)  
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)  
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38BDF8?logo=tailwind-css)](https://tailwindcss.com/)  
+[![NextAuth](https://img.shields.io/badge/Auth-NextAuth.js-green?logo=auth0)](https://authjs.dev/)  
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-First, run the development server:
+**A modern luxury cabin hotel booking website** built with **Next.js 14 (App Router)**, **TypeScript**, **NextAuth v5**, and **TailwindCSS**.  
+Users can **browse cabins, create bookings, and manage their reservations** with a smooth, responsive UI.
 
-```bash
+---
+
+## 🚀 Features
+
+- 🏡 **Cabin Listings** with images, prices, and availability
+- 📅 **Booking System** with start/end date, guests, and nights
+- 🔐 **Authentication** via **Google (NextAuth v5)**
+- 👤 **Profile Management** with editable guest information
+- 🗑 **Reservation Management**: edit and delete bookings
+- 📱 **Responsive Design** using **TailwindCSS**
+- ⚡ **Optimized Images** using Next.js `<Image />`
+- 🔄 **Server Actions & Revalidation** for real-time updates
+
+---
+
+## 📂 Project Structure
+
+the_wild_oasis_website/
+├── app/ # App Router pages, layouts, and components
+│ ├── \_components/ # UI components (Header, SideNavigation, etc.)
+│ ├── \_lib/ # Authentication, server actions
+│ ├── account/ # Nested routes for account pages
+│ ├── styles/ # Global Tailwind styles
+│ └── types/ # TypeScript types (BookingType, GuestType, CabinType)
+├── public/ # Static assets (images, favicon, etc.)
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+└── README.md
+
+## ⚡ Tech Stack
+
+- **Framework**: [Next.js 14](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/)
+- **Authentication**: [NextAuth.js v5](https://authjs.dev/)
+- **State Management**: React Context API
+- **Date Management**: [date-fns](https://date-fns.org/)
+- **Deployment**: [Vercel](https://vercel.com)
+
+---
+
+## 🛠 Getting Started
+
+First, clone the repository and install dependencies:
+
+git clone <your-repo-url>
+cd the_wild_oasis_website
+npm install
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to see the app running.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔑 Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+AUTH_GOOGLE_ID=your_google_client_id
+AUTH_GOOGLE_SECRET=your_google_client_secret
+NEXTAUTH_SECRET=your_secret
+NEXTAUTH_URL=http://localhost:3000
 
-## Learn More
+## 📸 Screenshots
 
-To learn more about Next.js, take a look at the following resources:
+### 🏠 Home Page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Home Page](public/screenshots/home-page.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📅 Booking Page
 
-## Deploy on Vercel
+![Booking Page](public/screenshots/booking-page.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 👤 Cabin Reserve Page
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Profile Page](public/screenshots/cabin-reserve-page.png)
+
+### 👤 About Page
+
+![Profile Page](public/screenshots/about-page.png)
+
+### 👤 Cabins Page
+
+![Profile Page](public/screenshots/cabins-page.png)
