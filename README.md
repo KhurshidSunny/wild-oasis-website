@@ -22,22 +22,7 @@ Users can **browse cabins, create bookings, and manage their reservations** with
 - ⚡ **Optimized Images** using Next.js `<Image />`
 - 🔄 **Server Actions & Revalidation** for real-time updates
 
----
 
-## 📂 Project Structure
-
-the_wild_oasis_website/
-├── app/ # App Router pages, layouts, and components
-│ ├── \_components/ # UI components (Header, SideNavigation, etc.)
-│ ├── \_lib/ # Authentication, server actions
-│ ├── account/ # Nested routes for account pages
-│ ├── styles/ # Global Tailwind styles
-│ └── types/ # TypeScript types (BookingType, GuestType, CabinType)
-├── public/ # Static assets (images, favicon, etc.)
-├── package.json
-├── tailwind.config.js
-├── tsconfig.json
-└── README.md
 
 ## ⚡ Tech Stack
 
@@ -55,20 +40,21 @@ the_wild_oasis_website/
 
 First, clone the repository and install dependencies:
 
-git clone <your-repo-url>
-cd the_wild_oasis_website
-npm install
-
-npm run dev
+- git clone <your-repo-url>
+- cd the_wild_oasis_website
+- npm install
+- npm run dev
 
 Open http://localhost:3000 to see the app running.
 
+
 ## 🔑 Environment Variables
 
-AUTH_GOOGLE_ID=your_google_client_id
-AUTH_GOOGLE_SECRET=your_google_client_secret
-NEXTAUTH_SECRET=your_secret
-NEXTAUTH_URL=http://localhost:3000
+- AUTH_GOOGLE_ID=your_google_client_id
+- AUTH_GOOGLE_SECRET=your_google_client_secret
+- NEXTAUTH_SECRET=your_secret
+- NEXTAUTH_URL=http://localhost:3000
+
 
 ## 📸 Screenshots
 
