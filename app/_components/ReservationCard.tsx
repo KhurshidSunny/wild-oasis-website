@@ -9,10 +9,14 @@ type ReservationCardProps = {
   booking: BookingType;
   onDelete: (bookingId: string) => Promise<void>;
 };
-export const formatDistanceFromNow = (dateStr: string) =>
-  formatDistance(parseISO(dateStr), new Date(), {
-    addSuffix: true,
-  }).replace("about ", "");
+export const formatDistanceFromNow = (dateStr: string | Date) =>
+  formatDistance(
+    typeof dateStr === "string" ? parseISO(dateStr) : dateStr,
+    new Date(),
+    {
+      addSuffix: true,
+    }
+  ).replace("about ", "");
 
 function ReservationCard({ booking, onDelete }: ReservationCardProps) {
   const {
@@ -60,10 +64,8 @@ function ReservationCard({ booking, onDelete }: ReservationCardProps) {
 
         <p className="text-lg text-primary-300">
           {format(new Date(start), "EEE, MMM dd yyyy")} (
-          {isToday(new Date(start))
-            ? "Today"
-            : formatDistanceFromNow(start.toISOString())}
-          ) &mdash; {format(new Date(end), "EEE, MMM dd yyyy")}
+          {isToday(new Date(start)) ? "Today" : formatDistanceFromNow(start)})
+          &mdash; {format(new Date(end), "EEE, MMM dd yyyy")}
         </p>
 
         <div className="flex gap-5 mt-auto items-baseline">
